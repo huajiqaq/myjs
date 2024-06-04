@@ -10,21 +10,6 @@
 (function () {
     'use strict';
 
-    let copyfunc;
-
-    document.addEventListener('DOMContentLoaded', (event) => {
-        copyfunc = navigator.clipboard.writeText.bind(navigator.clipboard);
-    });
-
-    function copyTextToClipboard(text) {
-        try {
-            copyfunc(text);
-            console.log('文本已成功复制到剪贴板');
-        } catch (err) {
-            console.error('无法复制到剪贴板:', err);
-        }
-    }
-
     function init() {
         let callRecords = {
             nativeMethods: [], // 专门存放疑似Native注入方法的记录
@@ -36,7 +21,6 @@
                 const iframe = document.createElement('iframe');
                 iframe.style.display = 'none';
                 iframe.src = 'about:blank';
-                document.body.appendChild(iframe);
 
                 iframe.onload = function () {
                     try {
@@ -115,6 +99,10 @@
                         document.body.removeChild(iframe);
                     }
                 };
+
+                // display 为 none 的 iframe 的 onload事件 需要写在 appendChild 前 否则 onload事件 无法触发
+                document.body.appendChild(iframe);
+
             });
         }
 
@@ -189,6 +177,34 @@
         });
     }
 
-    window.addEventListener("load", init)
+    if (document.readyState != 'complete') {
+        document.addEventListener('DOMContentLoaded', initCopyFunction);
+    } else {
+        initCopyFunction()
+    }
+
+    let copyfunc;
+
+    function initCopyFunction() {
+        copyfunc = navigator.clipboard.writeText.bind(navigator.clipboard);
+    }
+
+    function copyTextToClipboard(text) {
+        try {
+            copyfunc(text);
+            console.log('文本已成功复制到剪贴板');
+        } catch (err) {
+            console.error('无法复制到剪贴板:', err);
+        }
+    }
+
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        initCopyFunction()
+        init()
+    } else {
+        document.addEventListener('DOMContentLoaded', initCopyFunction);
+        window.addEventListener("load", init)
+    }
+
 
 })();

@@ -3,7 +3,8 @@
  * 并提供了一种机制来记录这些方法的行为，包括它们的调用记录。
  * 当用户点击页面时，会将检测到的方法汇总及调用记录复制到剪贴板上。
  * 使用抓包注入 在body下添加 
- * <script src="https://jihulab.com/huajicloud/myjs/-/raw/main/detectAndLogInjectedMethods.js"></script>
+ * <script>js内容</script>
+ * @version 0.1
  * @author huajiqaq
  */
 

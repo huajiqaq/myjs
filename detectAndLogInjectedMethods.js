@@ -177,12 +177,6 @@
         });
     }
 
-    if (document.readyState != 'complete') {
-        document.addEventListener('DOMContentLoaded', initCopyFunction);
-    } else {
-        initCopyFunction()
-    }
-
     let copyfunc;
 
     function initCopyFunction() {
@@ -200,9 +194,13 @@
 
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
         initCopyFunction()
-        init()
     } else {
         document.addEventListener('DOMContentLoaded', initCopyFunction);
+    }
+
+    if (document.readyState === 'complete') {
+        init()
+    } else {
         window.addEventListener("load", init)
     }
 

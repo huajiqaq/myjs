@@ -21,9 +21,9 @@
         };
 
 
-        function isNative(value, _name) {
+        function isNative(value, name) {
             let toStringResult = value.toString()
-            return toStringResult == 'function ${name} { [native code] }' || toStringResult == 'function () { [native code] }'
+            return toStringResult == `function ${name}() { [native code] }` || toStringResult == 'function () { [native code] }'
         };
 
         function isAllNativeMethods(object) {

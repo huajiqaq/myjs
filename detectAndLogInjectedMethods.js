@@ -260,9 +260,12 @@
             if (callRecords.nativeObjects.length > 0) {
                 outputString += '疑似Native注入对象及其调用记录:\n';
                 callRecords.nativeObjects.forEach(methodRecord => {
-                    outputString += `对象名: ${methodRecord.name}\n调用记录:\n`;
-                    if (Object.keys(methodRecord.functions).length > 0) {
-                        Object.values(methodRecord.functions).forEach(funclog => {
+                    outputString += `对象名: ${methodRecord.name}\n对象下的函数:\n`;
+                    let allkeys = Object.keys(methodRecord.functions)
+                    if (allkeys.length > 0) {
+                        allkeys.forEach(key => {
+                            outputString += `函数名: ${key}\n调用记录:\n`;
+                            let funclog = methodRecord.functions[key]
                             if (funclog.calls.length > 0) {
                                 funclog.calls.forEach(call => {
                                     outputString += `- 调用时间: ${call.timestamp}, 参数: ${JSON.stringify(call.args)}\n`;
@@ -284,9 +287,12 @@
             if (callRecords.otherInjectedObjects.length > 0) {
                 outputString += '其他外部注入对象及其调用记录:\n';
                 callRecords.otherInjectedObjects.forEach(methodRecord => {
-                    outputString += `对象名: ${methodRecord.name}\n调用记录:\n`;
-                    if (Object.keys(methodRecord.functions).length > 0) {
-                        Object.values(methodRecord.functions).forEach(funclog => {
+                    outputString += `对象名: ${methodRecord.name}\n对象下的函数:\n`;
+                    let allkeys = Object.keys(methodRecord.functions)
+                    if (allkeys.length > 0) {
+                        allkeys.forEach(key => {
+                            outputString += `函数名: ${key}\n调用记录:\n`;
+                            let funclog = methodRecord.functions[key]
                             if (funclog.calls.length > 0) {
                                 funclog.calls.forEach(call => {
                                     outputString += `- 调用时间: ${call.timestamp}, 参数: ${JSON.stringify(call.args)}\n`;
@@ -294,6 +300,7 @@
                             } else {
                                 outputString += '- 无调用记录\n';
                             }
+
                         });
                     } else {
                         outputString += '- 该对象下无函数\n';

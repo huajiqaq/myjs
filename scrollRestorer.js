@@ -173,7 +173,7 @@
         // 初始化滚动监听
         scrollRestorer.initializeScrollTracking();
     } else {
-        window.addEventListener("load", scrollRestorer.initializeScrollTracking())
+        window.addEventListener("load", scrollRestorer.initializeScrollTracking)
     }
 
 })()
